@@ -71,7 +71,7 @@ const Contact = () => {
             <div className="pt-6">
               <Link href="/doctors">
                 <button className="bg-gray-900 cursor-pointer text-white px-10 py-3 rounded-xl font-semibold hover:bg-gray-800 transition-colors">
-                  Visit all Doctors
+                  Visit Doctors
                 </button>
               </Link>
             </div>

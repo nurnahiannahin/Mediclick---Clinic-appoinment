@@ -1,11 +1,20 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
 import { FiMenu, FiX } from 'react-icons/fi';
+import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Helper to check if the link is active
+  const isActive = (path: string) => pathname === path;
+
+  // Active/Inactive styles
+  const activeClass = "text-teal-600";
+  const inactiveClass = "text-gray-700 hover:text-teal-600";
 
   return (
     <nav className="w-full bg-[#e8f3f0] border-b border-teal-100 relative sticky top-0 z-50">
@@ -22,16 +31,16 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Nav Links */}
-        <div className="hidden md:flex items-center gap-8 text-gray-700 font-medium">
-          <Link href="/" className="hover:text-teal-600 transition-colors text-lg font-bold">Home</Link>
-          <Link href="/doctors" className="hover:text-teal-600 transition-colors text-lg font-bold">Doctors</Link>
-          <Link href="/services" className="hover:text-teal-600 transition-colors text-lg font-bold">Our Services</Link>
-          <Link href="/contact" className="hover:text-teal-600 transition-colors text-lg font-bold">Contact</Link>
+        <div className="hidden md:flex items-center gap-8 font-medium">
+          <Link href="/" className={`${isActive('/') ? activeClass : inactiveClass} transition-colors text-lg font-bold`}>Home</Link>
+          <Link href="/doctors" className={`${isActive('/doctors') ? activeClass : inactiveClass} transition-colors text-lg font-bold`}>Doctors</Link>
+          <Link href="/services" className={`${isActive('/services') ? activeClass : inactiveClass} transition-colors text-lg font-bold`}>Our Services</Link>
+          <Link href="/contact" className={`${isActive('/contact') ? activeClass : inactiveClass} transition-colors text-lg font-bold`}>Contact</Link>
         </div>
 
         {/* Desktop Action Buttons */}
         <div className="hidden md:flex items-center gap-3">
-          <Link href="/admin" className="text-gray-700 bg-transparent border-2 px-6 py-2 rounded-2xl hover:text-teal-600 transition-colors text-lg font-bold">Admin</Link>
+          <Link href="/admin" className={`${isActive('/admin') ? activeClass : inactiveClass} bg-transparent border-2 px-6 py-2 rounded-2xl transition-colors text-lg font-bold`}>Admin</Link>
           <Link href="/book" className="bg-teal-500 font-bold text-white px-5 py-2.5 rounded-xl hover:bg-teal-600 transition-all shadow-sm shadow-teal-200">
             Book Now
           </Link>
@@ -46,10 +55,10 @@ const Navbar = () => {
       {/* Mobile Menu Overlay */}
       {isOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-[#e8f3f0] border-b border-teal-100 p-6 flex flex-col gap-4 items-center z-40">
-          <Link href="/" onClick={() => setIsOpen(false)} className="text-lg font-bold text-gray-700">Home</Link>
-          <Link href="/doctors" onClick={() => setIsOpen(false)} className="text-lg font-bold text-gray-700">Doctors</Link>
-          <Link href="/contact" onClick={() => setIsOpen(false)} className="text-lg font-bold text-gray-700">Contact</Link>
-          <Link href="/admin" onClick={() => setIsOpen(false)} className="text-lg font-bold text-gray-700">Admin</Link>
+          <Link href="/" onClick={() => setIsOpen(false)} className={`${isActive('/') ? activeClass : "text-gray-700"} text-lg font-bold`}>Home</Link>
+          <Link href="/doctors" onClick={() => setIsOpen(false)} className={`${isActive('/doctors') ? activeClass : "text-gray-700"} text-lg font-bold`}>Doctors</Link>
+          <Link href="/contact" onClick={() => setIsOpen(false)} className={`${isActive('/contact') ? activeClass : "text-gray-700"} text-lg font-bold`}>Contact</Link>
+          <Link href="/admin" onClick={() => setIsOpen(false)} className={`${isActive('/admin') ? activeClass : "text-gray-700"} text-lg font-bold`}>Admin</Link>
           <Link href="/book" onClick={() => setIsOpen(false)} className="bg-teal-500 font-bold text-white px-6 py-3 rounded-xl w-full text-center">
             Book Now
           </Link>
